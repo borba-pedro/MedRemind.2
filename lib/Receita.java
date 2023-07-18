@@ -2,11 +2,13 @@ import java.util.Date;
 import java.util.List;
 
 public class Receita {
+
     private int codReceita;
     private Date dataReceita;
     private Medico medico;
     private Paciente paciente;
     private List<Medicamento> medicamento;
+    private String dosagem;
     public int getCodReceita() {
         return codReceita;
     }
@@ -37,13 +39,17 @@ public class Receita {
     public void setMedicamento(List<Medicamento> medicamento) {
         this.medicamento = medicamento;
     }
+    public String getDosagem() {
+        return dosagem;
+    }
+    public void setDosagem(String dosagem) {
+        this.dosagem = dosagem;
+    }
+
     @Override
     public String toString() {
         return "Receita [codReceita=" + codReceita + ", dataReceita=" + dataReceita + ", medico=" + medico
-                + ", paciente=" + paciente + ", medicamento=" + medicamento + "]";
+                + ", paciente=" + paciente + ", medicamento=" + medicamento + ", dosagem=" + dosagem + "]";
     }
-
-
     
-
 }
