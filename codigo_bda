@@ -1,0 +1,247 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:3307
+-- Tempo de geração: 20-Jul-2023 às 21:36
+-- Versão do servidor: 10.3.15-MariaDB
+-- versão do PHP: 7.3.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `medremind`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `medicamento`
+--
+
+CREATE TABLE `medicamento` (
+  `cod_medicamento` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `data_de_validade` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `medicamento`
+--
+
+INSERT INTO `medicamento` (`cod_medicamento`, `nome`, `data_de_validade`) VALUES
+(1, 'Dipirona', '2023-07-21'),
+(2, 'Neosaldina', '2023-12-01'),
+(3, 'Novalgina', '2023-12-01'),
+(4, 'Engov', '2023-11-11'),
+(5, 'Sonrisal', '2025-01-21'),
+(6, 'Lacto-Purga', '2035-02-15');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `medicamento_receita`
+--
+
+CREATE TABLE `medicamento_receita` (
+  `cod_mr` int(11) NOT NULL,
+  `quantidade` varchar(40) NOT NULL,
+  `dosagem` varchar(30) NOT NULL,
+  `cod_receita` int(11) NOT NULL,
+  `cod_medicamento` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `medicamento_receita`
+--
+
+INSERT INTO `medicamento_receita` (`cod_mr`, `quantidade`, `dosagem`, `cod_receita`, `cod_medicamento`) VALUES
+(1, '50ml', '1ml por hora', 1, 1),
+(2, '600g', '1/2g por dia', 2, 2),
+(3, '100ml', '1ml a cade 6hrs', 3, 3),
+(4, '250ml', '1ml de dois em dois dias', 4, 4),
+(5, '50g', '1g por dia', 5, 5),
+(6, '150ml', '5ml por hora', 6, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `medico`
+--
+
+CREATE TABLE `medico` (
+  `id_medico` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `especialidade` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `medico`
+--
+
+INSERT INTO `medico` (`id_medico`, `nome`, `especialidade`) VALUES
+(1, 'Paulo Muzzy', 'Medicina Esportiva'),
+(2, 'Drauzio Varella', 'Cancerologista'),
+(3, 'Dr. Rey', 'Cirurgião Plástico'),
+(4, 'Antônio de Salles', 'Neurocirurgião'),
+(5, 'Adriana de oliveira melo', 'Ginecologista'),
+(6, 'Jacinto Leite', 'Infectologista');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `paciente`
+--
+
+CREATE TABLE `paciente` (
+  `id_paciente` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `idade` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `cpf` varchar(16) NOT NULL,
+  `senha` varchar(25) NOT NULL,
+  `telefone` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `paciente`
+--
+
+INSERT INTO `paciente` (`id_paciente`, `nome`, `idade`, `email`, `cpf`, `senha`, `telefone`) VALUES
+(1, 'Lucas Veiga', 18, 'lucasvasstivensom@gmail.com', '850.681.280-15', 'luquinhas123', 984942503),
+(2, 'Hiago Lima', 16, 'hiagolima@gmail.com', '234.194.853-69', 'hiagodelas66', 984234013),
+(3, 'Guilherme Aguirre', 18, 'guiaguirre69@gmail.com', '954.361.122-12', 'guidasguria121', 943761295),
+(4, 'Pedro Borba', 17, 'pedroborba11@gmail.com', '744.311.246-18', 'pedro6969', 943245290),
+(5, 'Marco Kalebe', 20, 'kalebemarco@gmail.com', '257.341.742-55', 'kalebinhop7', 921901212),
+(6, 'Renan Oliveira', 16, 'renandelas11@gmail.com', '243.131.982-22', 'amominhamulher666', 946761000);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `receita`
+--
+
+CREATE TABLE `receita` (
+  `cod_receita` int(11) NOT NULL,
+  `data_receita` date NOT NULL,
+  `id_paciente` int(11) DEFAULT NULL,
+  `id_medico` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `receita`
+--
+
+INSERT INTO `receita` (`cod_receita`, `data_receita`, `id_paciente`, `id_medico`) VALUES
+(1, '2023-07-21', 1, 1),
+(2, '2023-07-20', 2, 2),
+(3, '2023-05-11', 3, 3),
+(4, '2023-01-15', 4, 4),
+(5, '2023-03-01', 5, 5),
+(6, '2022-11-10', 6, 6);
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices para tabela `medicamento`
+--
+ALTER TABLE `medicamento`
+  ADD PRIMARY KEY (`cod_medicamento`),
+  ADD UNIQUE KEY `nome` (`nome`);
+
+--
+-- Índices para tabela `medicamento_receita`
+--
+ALTER TABLE `medicamento_receita`
+  ADD PRIMARY KEY (`cod_mr`),
+  ADD KEY `cod_receita` (`cod_receita`),
+  ADD KEY `cod_medicamento` (`cod_medicamento`);
+
+--
+-- Índices para tabela `medico`
+--
+ALTER TABLE `medico`
+  ADD PRIMARY KEY (`id_medico`);
+
+--
+-- Índices para tabela `paciente`
+--
+ALTER TABLE `paciente`
+  ADD PRIMARY KEY (`id_paciente`),
+  ADD UNIQUE KEY `email` (`email`,`cpf`,`telefone`);
+
+--
+-- Índices para tabela `receita`
+--
+ALTER TABLE `receita`
+  ADD PRIMARY KEY (`cod_receita`),
+  ADD KEY `id_paciente` (`id_paciente`),
+  ADD KEY `id_medico` (`id_medico`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `medicamento`
+--
+ALTER TABLE `medicamento`
+  MODIFY `cod_medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT de tabela `medicamento_receita`
+--
+ALTER TABLE `medicamento_receita`
+  MODIFY `cod_mr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `medico`
+--
+ALTER TABLE `medico`
+  MODIFY `id_medico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `paciente`
+--
+ALTER TABLE `paciente`
+  MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `receita`
+--
+ALTER TABLE `receita`
+  MODIFY `cod_receita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `medicamento_receita`
+--
+ALTER TABLE `medicamento_receita`
+  ADD CONSTRAINT `medicamento_receita_ibfk_1` FOREIGN KEY (`cod_receita`) REFERENCES `receita` (`cod_receita`),
+  ADD CONSTRAINT `medicamento_receita_ibfk_2` FOREIGN KEY (`cod_medicamento`) REFERENCES `medicamento` (`cod_medicamento`);
+
+--
+-- Limitadores para a tabela `receita`
+--
+ALTER TABLE `receita`
+  ADD CONSTRAINT `receita_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`),
+  ADD CONSTRAINT `receita_ibfk_2` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
